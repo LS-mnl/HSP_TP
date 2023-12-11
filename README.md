@@ -1,7 +1,7 @@
 # Hardware for Signal Processing
 Implémentation d'un CNN - LeNet-5 sur GPU
 
-Réalisé par : **KEBIR Manel KHERZI Rayane**
+Réalisé par : **KEBIR Manel           KHERZI Rayane**
 
 ## Getting Started
 
