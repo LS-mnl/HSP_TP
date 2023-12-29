@@ -23,7 +23,7 @@ On exécute ce dernier, en Lancant la commande :
 ./nomdufichier
 ```
 
-![Objectifs](https://img.shields.io/badge/Hello-red)
+![Objectifs](https://img.shields.io/badge/objectifs-red)
 
 ## 1- Objectifs
 
