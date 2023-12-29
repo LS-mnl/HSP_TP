@@ -34,7 +34,7 @@ Les objectifs de ce projet sont :
 
 ### Implémentation d'un CNN
 #### LeNet-5
-A terme, l'objectif final est d'implémenter l'inférence d'un CNN très classique : LeNet-5
+A terme, l'objectif final est d'implémenter l'inférence d'un CNN très classique : LeNet-5.
 
 La lecture de cet article apporte les informations nécessaires pour comprendre ce réseau de neurones.
 
