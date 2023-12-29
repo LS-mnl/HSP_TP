@@ -121,7 +121,6 @@ Ci-dessous un exemple de réalisation sur une multiplication de matrices 3x3:
 
 <img src="https://img.shields.io/badge/3-Premières couches du réseau de neurones LeNet5 : Convolution 2D et subsampling-red" alt="Premières couches du réseau de neurones LeNet5 : Convolution 2D et subsampling" style="height: 40px;"/>
 
-## 3- Partie 2. Premières couches du réseau de neurones LeNet-5 : Convolution 2D et subsampling
 L'architecture du réseau LeNet-5 est composée de plusieurs couches :
 
 * Layer 1- Couche d'entrée de taille 32x32 correspondant à la taille des images de la base de données MNIST
