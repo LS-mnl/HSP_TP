@@ -23,7 +23,7 @@ On exécute ce dernier, en Lancant la commande :
 ./nomdufichier
 ```
 
- ## 1- Objectifs
+<p style="color: red;"> ## 1- Objectifs</p>
 Les objectifs de ce projet sont : 
 * Apprendre à utiliser CUDA
 * Etudier la complexité d'algorithmes et l'accélération obtenue sur GPU par rapport à une exécution sur CPU
