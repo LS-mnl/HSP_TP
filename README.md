@@ -23,9 +23,10 @@ On exécute ce dernier, en Lancant la commande :
 ./nomdufichier
 ```
 
-<p style="color: red;">
-  ## 1- Objectifs
-</p>
+![Hello](https://img.shields.io/badge/Hello-red)
+
+## 1- Objectifs
+
 Les objectifs de ce projet sont : 
 * Apprendre à utiliser CUDA
 * Etudier la complexité d'algorithmes et l'accélération obtenue sur GPU par rapport à une exécution sur CPU
