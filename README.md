@@ -25,7 +25,6 @@ On exécute ce dernier, en Lancant la commande :
 
 
 <img src="https://img.shields.io/badge/1-Objectifs-red" alt="Objectifs" style="height: 50px;"/>
-## 1- Objectifs
 
 Les objectifs de ce projet sont : 
 * Apprendre à utiliser CUDA
@@ -45,7 +44,7 @@ https://www.datasciencecentral.com/profiles/blogs/lenet-5-a-classic-cnn-architec
 
 ![LeNet-5](https://user-images.githubusercontent.com/75682374/149537925-7facd228-d0c7-4f33-b43d-17e5f4afd91f.png)
 
-<img src="https://img.shields.io/badge/1-Prise en main de Cuda : Addition et Multiplication de matrices-red" alt="Prise en main de Cuda : Addition et Multiplication de matrices" style="height: 50px;"/>
+<img src="https://img.shields.io/badge/2-Prise en main de Cuda : Addition et Multiplication de matrices-red" alt="Prise en main de Cuda : Addition et Multiplication de matrices" style="height: 50px;"/>
 ## 2- Partie 1. Prise en main de Cuda : Addition et Multiplication de matrices
 
 ### 2.1. Création de matrice
@@ -118,6 +117,8 @@ Comme pour l'addition, la multiplication sur GPU repose sur le même principe qu
 Ci-dessous un exemple de réalisation sur une multiplication de matrices 3x3:
 ![image](https://user-images.githubusercontent.com/94063629/149382451-8b1d5a11-f984-4b3e-8e46-3f14cc048176.png)
 
+
+<img src="https://img.shields.io/badge/3-Objectifs-red" alt="Partie 2. Premières couches du réseau de neurones LeNet-5 : Convolution 2D et subsampling" style="height: 50px;"/>
 ## 3- Partie 2. Premières couches du réseau de neurones LeNet-5 : Convolution 2D et subsampling
 L'architecture du réseau LeNet-5 est composée de plusieurs couches :
 
