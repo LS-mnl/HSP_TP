@@ -3,9 +3,6 @@ Implémentation d'un CNN - LeNet-5 sur GPU
 
 Réalisé par : **Manel KEBIR  & Rayane KHERZI**
 
-<svg width="200" height="30" xmlns="http://www.w3.org/2000/svg">
-  <text y="50%" dy=".3em" x="10" font-size="24" fill="red">Getting Started</text>
-</svg>
 
 ## Getting Started
 
