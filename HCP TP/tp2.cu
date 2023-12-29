@@ -1,6 +1,28 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/*
+*** Function Name : MatrixInit ***
+
+Sert à initialiser n'importe quelle matrice de taille NxP selon diférentes possibilités:
+
+    * Si on veut initialiser qu'avec des 0  ==> type == 0 
+    
+    * Si on veut initialiser qu'avec des 1  ==> type == 1 
+    
+                                    0 0 0
+    * Pour avoir un kernel comme :  0 2 0   ==> type == 2
+                                    0 0 0
+
+    * Pour avoir une initisalisation aléatoire entre 0 et 1: type == 3
+    
+Paramètres : 
+    n : nombre de lignes de la matrice,
+    p : nombre de colonnes de la matrice si n différent de p,
+    d : nombre de kernel de la matrice (profondeur)
+    M : pointeur de la matrice
+    type : permet de choisir l'initialisation souhaité
+*/
 
 void MatrixInit(float *M, int n, int p, int d, int type){
     
@@ -33,6 +55,20 @@ void MatrixInit(float *M, int n, int p, int d, int type){
     }
 }
 
+/*
+*** Function Name : MatrixPrint2D ***
+
+Sert à afficher n'importe quelle matrice NxP dans une forme plus conventionnelle. 
+
+                                                              0 0 0
+ex : M = [0 0 0; 0 0 0; 0 0 0] sera affichée comme suit : M = 0 0 0   
+                                                              0 0 0 
+Paramètres : 
+    n : nombre de lignes de la matrice,
+    p : nombre de colonnes de la matrice si n différent de p,
+    M : pointeur de la matrice
+*/
+
 
 void MatrixPrint2D(float *M, int n, int p){
     
@@ -46,7 +82,27 @@ void MatrixPrint2D(float *M, int n, int p){
     printf("\n");
 }
 
+// Layer 2 - Convolution 2D
 
+/*
+*** Function Name : cudaConv2D ***
+
+Sert à effectuer la convolution de la matrice M avec 6 noyaux de convolution de taille 5x5.
+
+Paramètres : 
+    M_ligne : nombre de lignes de la matrice M
+    M_colonne : nombre de colonnes de la matrice M
+    M : pointeur de la matrice
+    kernel_size : nombre de ligne et de colonne du kernel, noyau de convolution
+    nb_kernel : nombre de kernel, noyau de convolution 
+    kernel : pointeur de la matrice correspondant au kernel 
+    Mout_ligne : nombre de lignes de la matrice de sortie Mout
+    Mout_colonne : nombre de colonnes de la matrice de sortie Mout
+    Mout : pointeur de la matrice Mout
+
+NB : La relation entre le nombre de lignes (respectivement de colonnes) de la matrice d'entrée et le nombre de lignes (respectivement de colonnes) de 
+la matrice de sortie est : Mout_ligne = (M_ligne - kernel_size) + 1 
+*/
 
 __global__ void cudaConv2D(float* M, float* kernel, float* Mout, int M_ligne, int M_colonne, int kernel_size, int nb_kernel, int Mout_ligne, int Mout_colonne){
     
@@ -76,6 +132,29 @@ __global__ void cudaConv2D(float* M, float* kernel, float* Mout, int M_ligne, in
     }
 }
 
+// Layer 3 - Sous-échantillonnage 
+
+/*
+*** Function Name : cudaMeanPool ***
+
+Sert à effectuer le MeanPool de la Matrice d'entrée M par un kernel 2x2. 
+
+ex : 1 2    ==>  2.5 = (1 + 2 + 3 + 4) / 4 = 2.5
+     3 4 
+
+Paramètres : 
+    M_ligne : nombre de lignes de la matrice M
+    M_colonne : nombre de colonnes de la matrice M
+    M_prof : profondeur de la matrice M
+    M : pointeur de la matrice
+    meanpool_size : nombre de ligne et de colonne du kernel, noyau de convolution
+    Mout_ligne : nombre de lignes de la matrice de sortie Mout
+    Mout_colonne : nombre de colonnes de la matrice de sortie Mout
+    Mout : pointeur de la matrice Mout
+
+NB : La relation entre le nombre de lignes (respectivement de colonnes) de la matrice d'entrée et le nombre de lignes (respectivement de colonnes) de 
+la matrice de sortie est : Mout_ligne = M_ligne / meanpool_size
+*/
 
 
 __global__ void cudaMeanPool(float* M, float* Mout, int M_ligne, int M_colonne, int M_prof, int meanpool_size, int Mout_ligne, int Mout_colonne){
@@ -112,7 +191,20 @@ __global__ void cudaMeanPool(float* M, float* Mout, int M_ligne, int M_colonne, 
     }
 }
 
+/*
+*** Function Name : activation_tanh ***
 
+Sert à appliquer la fonction tanh à la matrice M sur le GPU. 
+
+ATTENTION : Cette fonction est définie en __device__, elle doit donc être appelée du GPU par une fonction __global__.
+Elle est exécutée sur le GPU.
+
+Paramètres : 
+    M_ligne : nombre de lignes de la matrice M
+    M_colonne : nombre de colonnes de la matrice M
+    M_prof : profondeur de la matrice M
+    M : pointeur de la matrice
+*/
 
 __device__ float* activation_tanh(float* M, int M_ligne, int M_colonne, int M_prof){
     
@@ -138,14 +230,22 @@ __global__ void cudaTanh(float* M, int M_ligne, int M_colonne, int M_prof){
     activation_tanh(M, M_ligne, M_colonne, M_prof);
 }
 
+/*
+*** Function Name : cudaTanh ***
 
+Sert simplement à appeler la fonction activation_tanh définie juste avant.
+
+Paramètres : 
+    M_ligne : nombre de lignes de la matrice M
+    M_colonne : nombre de colonnes de la matrice M
+    M_prof : profondeur de la matrice M
+    M : pointeur de la matrice
+*/
 
 int main(){
     
   // CPU \\ 
     
-    
-    // INITIALISATION DES MATRICES pour le CPU \\
     
     // Création de l'image d'entrée à convoluer
     float *raw_data;    
@@ -175,18 +275,16 @@ int main(){
     
 // GPU \\ 
 
-    // INITIALISATION DES MATRICES pour le GPU \\
-    
- 
+    // Définition des matrices cuda
     float *d_raw_data, *d_C1_data, *d_C1_kernel, *d_S1_data;
     
-  
+    // Allocation des mémoires des matrices pour cuda
     cudaMalloc((void**)&d_raw_data, sizeof(float) * 32 * 32 * 1);
     cudaMalloc((void**)&d_C1_kernel, sizeof(float) * 5 * 5 * 6);
     cudaMalloc((void**)&d_C1_data, sizeof(float) * 28 * 28 * 6);
     cudaMalloc((void**)&d_S1_data, sizeof(float) * 14 * 14 * 6);
     
-
+    // Copie des valeurs des matrices initialisées sur le CPU dans leur homonyme GPU
     cudaMemcpy(d_raw_data, raw_data, sizeof(float) * 32 * 32 * 1, cudaMemcpyHostToDevice);
     cudaMemcpy(d_C1_kernel, C1_kernel, sizeof(float) * 5 * 5 * 6, cudaMemcpyHostToDevice);
     cudaMemcpy(d_C1_data, C1_data, sizeof(float) * 28 * 28 * 6, cudaMemcpyHostToDevice);
@@ -208,7 +306,7 @@ int main(){
     cudaDeviceSynchronize();
     
     
- 
+    // Copie des résultats sur CPU
     cudaMemcpy(C1_data, d_C1_data, sizeof(float) * 28 * 28 * 6, cudaMemcpyDeviceToHost);
     cudaMemcpy(S1_data, d_S1_data, sizeof(float) * 14 * 14 * 6, cudaMemcpyDeviceToHost);
     cudaDeviceSynchronize();
