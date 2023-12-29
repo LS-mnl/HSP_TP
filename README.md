@@ -5,16 +5,8 @@ Réalisé par : **Manel KEBIR  & Rayane KHERZI**
 
 ## Getting Started
 
-### Prérequis
-
-Si vous voulez continuer ce projet, ou bien utiliser une partie de celui-ci, vous n'aurez pas besoin de grand chose. 
-Le langage utilisé pour ce projet est du Cuda, il vous faudra donc a minima un PC avec une carte graphique Nvidia. Sinon, vous ne pourrez pas utiliser les fonctions qui utilisent le GPU. 
-
-#### Quel IDE pour le langage Cuda ? 
-Aujourd'hui le langage Cuda n'est encore présent sur aucun IDE, mais comme la compilation et l'exécution se font via la console, il est possible d'utiliser n'importe quel IDE. 
-
-Un IDE comprenant la coloration synthaxique du C ou du C++ fait largement l'affaire. Choisissez donc celui qui vous voulez (Jupyter-Lab, VsCode ou encore Sublime Text font largement l'affaire)
-
+- Le langage utilisé pour ce TP est du Cuda, il vous faudra donc une carte graphique Nvidia. Sinon,ce n'est pas possible d'utiliser les fonctions qui utilisent le GPU. 
+- Cuda n'est encore présent sur aucun IDE, mais comme la compilation et l'exécution se font via la console, il est possible d'utiliser n'importe quel IDE dans notre cas on a utilisé VsCode. 
 
 #### Compilation et Execution depuis la console
 
@@ -24,15 +16,12 @@ Pour compiler un code Cuda, il vous suffit de lancer la commande :
 nvcc nomdufichier.cu -o nomdufichier
 ```
 
-Quand vous aurez fait cela, vous verrez apparaître un fichier portant le nom "nomdufichier". 
-Vous n'avez donc plus qu'à l'exécuter, et là encore, rien de plus simple. Lancer simplement la commande : 
+puis on a l'apparition d'un fichier portant le nom "nomdufichier". 
+On exécute ce dernier, en Lancant la commande : 
 
 ```
 ./nomdufichier
 ```
-
-PS: Pour que ces commandes fonctionnent il faut bien sûr que vous soyez dans votre dossier de travail. Vous pouvez vous déplacer facilement dans les dossiers grâce à la commande ```cd```.
-
 
 ## 1- Objectifs
 Les objectifs de ce projet sont : 
