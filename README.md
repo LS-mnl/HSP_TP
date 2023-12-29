@@ -157,6 +157,9 @@ Voci ci-dessous un exemple de réalisation d'une convolution d'une matrice 8x8 p
 ![image](https://user-images.githubusercontent.com/94063629/149505445-78691e54-997d-4050-af17-7a51034525a7.png)
 Dans cet exemple, on choisit volontairement des matrices aux coefficients simples afin de pouvoir confirmer le bon déroulement des calculs: le kernel nul avec un 2 central permet notamment la vérification rapide des calculs sur une matrice unitaire.
 
+
+
+<img src="https://img.shields.io/badge/4-Un peu de Python-red" alt="Un peu de Python" style="height: 40px;"/>
 ## 4- Partie 3. Un peu de Python
 
 ### 4.1. Notebook Python
