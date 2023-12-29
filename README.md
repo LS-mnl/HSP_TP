@@ -117,6 +117,7 @@ Ci-dessous un exemple de réalisation sur une multiplication de matrices 3x3:
 ![image](https://user-images.githubusercontent.com/94063629/149382451-8b1d5a11-f984-4b3e-8e46-3f14cc048176.png)
 
 
+
 <img src="https://img.shields.io/badge/3-Premières couches du réseau de neurones LeNet-5 : Convolution 2D et subsampling-red" alt="Premières couches du réseau de neurones LeNet-5 : Convolution 2D et subsampling" style="height: 40px;"/>
 
 ## 3- Partie 2. Premières couches du réseau de neurones LeNet-5 : Convolution 2D et subsampling
