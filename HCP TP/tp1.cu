@@ -7,10 +7,10 @@
 
  Initializes a matrix of size NxP with random values between -1 and 1.
 
- * Parameters:
- *    M: Pointer to the matrix (stored in row-major order)
- *    n: Number of rows in the matrix
- *    p: Number of columns in the matrix
+  Parameters:
+     M: Pointer to the matrix (stored in row-major order)
+     n: Number of rows in the matrix
+     p: Number of columns in the matrix
 */
 
 
@@ -22,18 +22,18 @@ void MatrixInit(float *M, int n, int p) {
 
 /*
 *** Function Name : MatrixPrint ***
+ Prints a matrix of size NxP in a conventional 2D matrix format.
+  
+  Parameters:
+     M: Pointer to the matrix to be printed (stored in row-major order)
+     n: Number of rows in the matrix
+     p: Number of columns in the matrix
 
-Sert à afficher une matrice NxP dans une forme plus conventionnelle. 
+                                                               0 0 0
+ex : M = [0 0 0; 0 0 0; 0 0 0]  will be printed as folow : M = 0 0 0   
+                                                               0 0 0 
+ */
 
-                                                              0 0 0
-ex : M = [0 0 0; 0 0 0; 0 0 0] sera affichée comme suit : M = 0 0 0   
-                                                              0 0 0 
-
-Paramètres : 
-    n : nombre de lignes de la matrice,
-    p : nombre de colonnes de la matrice si n différent de p,
-    M : pointeur de la matrice
-*/
 
 void MatrixPrint(float *M, int n, int p) {
     for (int i = 0; i < n; i++) {
@@ -48,14 +48,14 @@ void MatrixPrint(float *M, int n, int p) {
 /*
 *** Function Name : MatrixAdd ***
 
-Sert à additionner deux matrices de même taille NxP sur le CPU
-
-Paramètres : 
-    n : nombre de lignes des matrice,
-    p : nombre de colonnes des matrice si n différent de p,
-    M1 : pointeur de la matrice 1 de taille NxP,
-    M2 : pointeur de la matrice 2 de taille NxP,
-    Mout : pointeur vers la matrice résultante de l'addition de taille NxP
+ * Adds two matrices of the same size NxP element-wise.
+  
+  Parameters:
+     M1:   Pointer to the first matrix (stored in row-major order)
+     M2:   Pointer to the second matrix (stored in row-major order)
+     Mout: Pointer to the output matrix where the result is stored (stored in row-major order)
+     n:    Number of rows in each matrix
+     p:    Number of columns in each matrix
 */
 
 void MatrixAdd(float *M1, float *M2, float *Mout, int n, int p) {
@@ -63,22 +63,24 @@ void MatrixAdd(float *M1, float *M2, float *Mout, int n, int p) {
         Mout[i] = M1[i] + M2[i];
     }
 }
+
 /*
 *** Function Name : cudaMatrixAdd ***
 
-Sert à additionner deux matrices de même taille NxP sur le GPU 
+  Kernel function to add two matrices of the same size NxP element-wise on the GPU.
 
-Paramètres : 
-    n : nombre de lignes des matrice,
-    p : nombre de colonnes des matrices si n différent de p,
-    M1 : pointeur de la matrice 1 de taille NxP,
-    M2 : pointeur de la matrice 2 de taille NxP,
-    Mout : pointeur vers la matrice résultante de l'addition de taille NxP,
-    
-On peut considérer les dimensions des matrices comme les paramètres gridDim et blockDim pour l'appel de la fonction:
-    les lignes correspondent aux blocks,
-    les colonnes correspondent aux threads
-*/
+  Parameters:
+     M1:   Pointer to the first matrix in device memory
+     M2:   Pointer to the second matrix in device memory
+     Mout: Pointer to the output matrix in device memory
+     n:    Number of rows in each matrix
+     p:    Number of columns in each matrix
+  
+  Note:
+     Assumes a 1D grid of 1D blocks for simplicity. The kernel uses thread indices to map
+     to matrix elements in a row-major order.
+ */
+
 
 __global__ void cudaMatrixAdd(float *M1, float *M2, float *Mout, int n, int p) {
     int idx = threadIdx.x * blockDim.y + threadIdx.y;
@@ -88,16 +90,29 @@ __global__ void cudaMatrixAdd(float *M1, float *M2, float *Mout, int n, int p) {
 }
 
 /*
+  Performs matrix multiplication (dot product) of two square matrices NxN on the CPU.
+  
+  Parameters:
+     M1:   Pointer to the first matrix (stored in row-major order)
+     M2:   Pointer to the second matrix (stored in row-major order)
+     Mout: Pointer to the output matrix where the result is stored (stored in row-major order)
+     n:    The dimension of the matrices (both the number of rows and columns)
+ */
+
+/*
 *** Function Name : MatrixMult ***
+  Kernel function to perform matrix multiplication (dot product) of two square matrices NxN on the GPU.
+  
+  Parameters:
+     M1:   Pointer to the first matrix in device memory
+     M2:   Pointer to the second matrix in device memory
+     Mout: Pointer to the output matrix in device memory
+     n:    The dimension of the matrices (both the number of rows and columns)
+  
+  Note:
+     The kernel is launched with a 2D grid of 2D blocks, where each thread computes one element of the output matrix.
+ */
 
-Sert à effectuer la multiplication matricielle (dot) de deux matrices carrées NxN sur CPU
-
-Paramètres : 
-    n : nombre de lignes et colonne des matrices,
-    M1 : pointeur de la matrice 1 de taille NxN,
-    M2 : pointeur de la matrice 2 de taille NxN,
-    Mout : pointeur vers la matrice résultante de l'addition de taille NxN,
-*/
 
 void MatrixMult(float *M1, float *M2, float *Mout, int n) {
     for (int i = 0; i < n; i++) {
@@ -114,18 +129,20 @@ void MatrixMult(float *M1, float *M2, float *Mout, int n) {
 /*
 *** Function Name : cudaMatrixMult ***
 
-Sert à effectuer la multiplication matricielle (dot) de deux matrices carrées NxN sur GPU
+ Kernel function to perform matrix multiplication (dot product) of a non-square matrix NxP with PxM on the GPU.
+  
+  Parameters:
+     M1:   Pointer to the first matrix of size NxP in device memory
+     M2:   Pointer to the second matrix of size PxM in device memory
+     Mout: Pointer to the output matrix of size NxM in device memory
+     n:    Number of rows in the first matrix and the number of rows in the result matrix
+     p:    Number of columns in the first matrix and the number of rows in the second matrix
+     m:    Number of columns in the second matrix and the number of columns in the result matrix
+ 
+  Note:
+     The kernel is launched with a 2D grid of 2D blocks, where each thread computes one element of the output matrix.
+ */
 
-Paramètres : 
-    n : nombre de lignes et de colonnes des matrices,
-    M1 : pointeur de la matrice 1 de taille NxN,
-    M2 : pointeur de la matrice 2 de taille NxN,
-    Mout : pointeur vers la matrice résultante de la multiplication de taille NxN,
-    
-On peut considérer les dimensions des matrices comme les paramètres gridDim et blockDim pour l'appel de la fonction:
-    les lignes correspondent aux blocks,
-    les colonnes correspondent aux threads
-*/
 
 __global__ void cudaMatrixMult(float *M1, float *M2, float *Mout, int n) {
     int row = blockIdx.y * blockDim.y + threadIdx.y;
