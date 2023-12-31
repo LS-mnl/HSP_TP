@@ -46,7 +46,7 @@ https://www.datasciencecentral.com/profiles/blogs/lenet-5-a-classic-cnn-architec
 
 ![LeNet-5](https://user-images.githubusercontent.com/75682374/149537925-7facd228-d0c7-4f33-b43d-17e5f4afd91f.png)
 
-<img src="https://img.shields.io/badge/2-Prise en main de Cuda : Addition et Multiplication de matrices-red" alt="Prise en main de Cuda : Addition et Multiplication de matrices" style="height: 40px;"/>
+<img src="https://img.shields.io/badge/2-Prise en main de Cuda : Addition et Multiplication de matrices-orange" alt="Prise en main de Cuda : Addition et Multiplication de matrices" style="height: 40px;"/>
 
 ### 2.1. Création de matrice
 Dans tout le projet, que ce soit sur CPU ou GPU, on souhaite représenter les matrices sous forme de listes constituées des lignes de la matrice.
