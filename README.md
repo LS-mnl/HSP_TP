@@ -1,11 +1,11 @@
-<img src="https://img.shields.io/badge/Hardware for Signal Processing-orange" alt="Hardware for Signal Processing" style="height: 40px;"/>
+<img src="https://img.shields.io/badge/Hardware for Signal Processing-orange" alt="Hardware for Signal Processing" style="height: 60px;"/>
 
 Implémentation d'un CNN - LeNet-5 sur GPU
 
 Réalisé par : **Manel KEBIR  & Rayane KHERZI**
 
 <img src="https://img.shields.io/badge/0-Getting Started-red" alt="Getting Started" style="height: 40px;"/>
-## Getting Started
+
 
 - Le langage utilisé pour ce TP est du Cuda, il vous faudra donc une carte graphique Nvidia. Sinon,ce n'est pas possible d'utiliser les fonctions qui utilisent le GPU. 
 - Cuda n'est encore présent sur aucun IDE, mais comme la compilation et l'exécution se font via la console, il est possible d'utiliser n'importe quel IDE dans notre cas on a utilisé VsCode. 
