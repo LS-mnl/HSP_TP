@@ -116,6 +116,7 @@ __global__ void cudaConv2D(float* M, float* kernel, float* Mout, int M_ligne, in
 
 
 // Layer 3 - Sous-échantillonnage 
+
 /*
 *** Function Name : cudaMeanPool ***
 
@@ -126,17 +127,17 @@ Example:
      3 4 
 
 Parameters:
-   M: Pointer to the input matrix.
-   Mout: Pointer to the output matrix.
-   M_ligne: Number of rows in M.
-   M_colonne: Number of columns in M.
-   M_prof: Depth of M.
-   meanpool_size: Size of the pooling kernel.
-   Mout_ligne: Number of rows in the output matrix.
-   Mout_colonne: Number of columns in the output matrix.
+  M: Pointer to the input matrix.
+  Mout: Pointer to the output matrix.
+  M_ligne: Number of rows in M.
+  M_colonne: Number of columns in M.
+  M_prof: Depth of M.
+  meanpool_size: Size of the pooling kernel.
+  Mout_ligne: Number of rows in the output matrix.
+  Mout_colonne: Number of columns in the output matrix.
 
 Note:
-   Output dimensions are calculated as: Mout_ligne = M_ligne / meanpool_size, and similarly for columns.
+   Output dimensions are calculated as: Mout_ligne = M_ligne / meanpool_size, and similarly for columns
 */
 
 
