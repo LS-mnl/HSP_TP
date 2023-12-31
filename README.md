@@ -1,5 +1,5 @@
-<img src="https://img.shields.io/badge/Hardware for Signal Processing-green" alt="Hardware for Signal Processing" style="height: 40px;"/>
-# Hardware for Signal Processing
+<img src="https://img.shields.io/badge/Hardware for Signal Processing-%230000ff" alt="Hardware for Signal Processing" style="height: 40px;"/>
+
 Implémentation d'un CNN - LeNet-5 sur GPU
 
 Réalisé par : **Manel KEBIR  & Rayane KHERZI**
