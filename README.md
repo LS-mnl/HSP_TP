@@ -26,7 +26,7 @@ On exécute ce dernier, en Lancant la commande :
 ```
 
 
-<img src="https://img.shields.io/badge/1-Objectifs-red" alt="Objectifs" style="height: 40px;"/>
+<img src="https://img.shields.io/badge/1-Objectifs-orange" alt="Objectifs" style="height: 40px;"/>
 
 Les objectifs de ce projet sont : 
 * Apprendre à utiliser CUDA
@@ -120,7 +120,7 @@ Ci-dessous un exemple de réalisation sur une multiplication de matrices 3x3:
 
 
 
-<img src="https://img.shields.io/badge/3-Premières couches du réseau de neurones LeNet5 : Convolution 2D et subsampling-red" alt="Premières couches du réseau de neurones LeNet5 : Convolution 2D et subsampling" style="height: 40px;"/>
+<img src="https://img.shields.io/badge/3-Premières couches du réseau de neurones LeNet5 : Convolution 2D et subsampling-orange" alt="Premières couches du réseau de neurones LeNet5 : Convolution 2D et subsampling" style="height: 40px;"/>
 
 L'architecture du réseau LeNet-5 est composée de plusieurs couches :
 
@@ -159,7 +159,7 @@ Dans cet exemple, on choisit volontairement des matrices aux coefficients simple
 
 
 
-<img src="https://img.shields.io/badge/4-Un peu de Python-red" alt="Un peu de Python" style="height: 40px;"/>
+<img src="https://img.shields.io/badge/4-Un peu de Python-orange" alt="Un peu de Python" style="height: 40px;"/>
 
 ### 4.1. Notebook Python
 Dans cette dernière partie, on utilise le notebook Python comme référence afin de finaliser notre réseau LeNet5.
