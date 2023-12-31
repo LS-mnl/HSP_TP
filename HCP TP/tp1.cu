@@ -48,7 +48,7 @@ void MatrixPrint(float *M, int n, int p) {
 /*
 *** Function Name : MatrixAdd ***
 
- * Adds two matrices of the same size NxP element-wise.
+  Adds two matrices of the same size NxP element-wise.
   
   Parameters:
      M1:   Pointer to the first matrix (stored in row-major order)
