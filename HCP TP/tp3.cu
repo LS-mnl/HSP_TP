@@ -205,6 +205,15 @@ __device__ float* activation_tanh(float* M, int M_ligne, int M_colonne, int M_pr
             
     return M;
 }
+/*
+*** Function Name : activation_tanh ***
+Wrapper for calling activation_tanh on the GPU.
+Parameters:
+   M: Pointer to the matrix.
+   M_ligne: Number of rows in M.
+   M_colonne: Number of columns in M.
+   M_prof: Depth of M.
+*/
 
 /*
 *** Function Name : cudaTanh ***
@@ -227,20 +236,18 @@ __global__ void cudaTanh(float* M, int M_ligne, int M_colonne, int M_prof){
 /*
 *** Function Name : cudaMatrixMultGeneral ***
 
-Sert à effectuer la multiplication matricielle (dot) d'une matrice NxP avec une matrice PxM sur le GPU
-
-Paramètres : 
-    n : nombre de lignes de la matrice M1
-    p : nombre de colonnes de M1, de lignes de M2
-    m : nombre de colonnes de M2
-    M1 : pointeur de la matrice 1 de taille NxP,
-    M2 : pointeur de la matrice 2 de taille PxM,
-    Mout : pointeur vers la matrice résultante de la multiplication de taille NxM
-
-On peut considérer les dimensions de la matrice de sortie comme les paramètres gridDim et blockDim pour l'appel de la fonction:
-    les lignes correspondent aux blocks : n
-    les colonnes correspondent aux threads : m
+Performs matrix multiplication (dot product) of a NxP matrix with a PxM matrix on the GPU.
+Parameters:
+   n: Number of rows in matrix M1.
+   p: Number of columns in M1 and number of rows in M2.
+   m: Number of columns in M2.
+   M1: Pointer to the first matrix of size NxP.
+   M2: Pointer to the second matrix of size PxM.
+   Mout: Pointer to the output matrix of size NxM.
+Note:
+   Grid and block dimensions in the kernel launch should correspond to the dimensions of the output matrix.
 */
+
 
 __device__ float* cudaMatrixMultGeneral(float *M1, float *M2, float *Mout, int n, int p, int m){
     
