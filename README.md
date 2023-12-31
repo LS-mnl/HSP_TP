@@ -66,7 +66,7 @@ Ci-dessous un exemple de réalisation sur une addition de matrices 3x3:
 
 #### **GPU**
 Sur **GPU**, le calcul se base également sur la somme des coefficients deux à deux mais est un peu plus complexe à mettre en oeuvre en raison de la parallélisation des calculs sur GPU.
-En particulier, la définition des indices des coefficients matriciels se fait cette fois via les variables _dim3_ définissant les threads afin de paralléliser (et donc accélérer) les calculs).
+En particulier, la définition des indices des coefficients matriciels se fait cette fois via les variables _dim3_ définissant les threads afin de paralléliser (et donc accélérer) les calculs.
 ![image](https://user-images.githubusercontent.com/94063629/148687472-8454bbe7-95fc-4721-b2ce-a9f924f99767.png)
 
 On définira par exemple l'indice de la ligne à considérer (au début de la fonction, et qui changera à chaque itération) par:
