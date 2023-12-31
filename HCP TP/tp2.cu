@@ -221,15 +221,6 @@ __device__ float* activation_tanh(float* M, int M_ligne, int M_colonne, int M_pr
     return M;
 }
 
-/*
-Kernel function to call the activation_tanh __device__ function.
-
-Parameters:
-    M: Pointer to the matrix on the GPU.
-    M_ligne: Number of rows in the matrix M.
-    M_colonne: Number of columns in the matrix M.
-    M_prof: Depth of the matrix M.
-*/
 
 
 __global__ void cudaTanh(float* M, int M_ligne, int M_colonne, int M_prof){
