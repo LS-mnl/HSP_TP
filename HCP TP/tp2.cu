@@ -129,24 +129,29 @@ __global__ void cudaConv2D(float* M, float* kernel, float* Mout, int M_ligne, in
 /*
 *** Function Name : cudaMeanPool ***
 
-Sert à effectuer le MeanPool de la Matrice d'entrée M par un kernel 2x2. 
+Performs mean pooling on the input matrix M using a 2x2 kernel.
 
-ex : 1 2    ==>  2.5 = (1 + 2 + 3 + 4) / 4 = 2.5
-     3 4 
+Example:
+    Given a sub-matrix:   1 2
+                      	  3 4
+    The mean pool result is: (1 + 2 + 3 + 4) / 4 = 2.5
 
-Paramètres : 
-    M_ligne : nombre de lignes de la matrice M
-    M_colonne : nombre de colonnes de la matrice M
-    M_prof : profondeur de la matrice M
-    M : pointeur de la matrice
-    meanpool_size : nombre de ligne et de colonne du kernel, noyau de convolution
-    Mout_ligne : nombre de lignes de la matrice de sortie Mout
-    Mout_colonne : nombre de colonnes de la matrice de sortie Mout
-    Mout : pointeur de la matrice Mout
+Parameters:
+    M: Pointer to the input matrix.
+    Mout: Pointer to the output matrix.
+    M_ligne: Number of rows in the input matrix M.
+    M_colonne: Number of columns in the input matrix M.
+    M_prof: Depth of the input matrix M.
+    meanpool_size: The size of the mean pooling window (both rows and columns).
+    Mout_ligne: Number of rows in the output matrix Mout.
+    Mout_colonne: Number of columns in the output matrix Mout.
 
-NB : La relation entre le nombre de lignes (respectivement de colonnes) de la matrice d'entrée et le nombre de lignes (respectivement de colonnes) de 
-la matrice de sortie est : Mout_ligne = M_ligne / meanpool_size
+Note:
+    The relationship between the input and output dimensions is:
+    Mout_ligne = M_ligne / meanpool_size
+    Mout_colonne = M_colonne / meanpool_size
 */
+
 
 
 __global__ void cudaMeanPool(float* M, float* Mout, int M_ligne, int M_colonne, int M_prof, int meanpool_size, int Mout_ligne, int Mout_colonne){
@@ -186,17 +191,17 @@ __global__ void cudaMeanPool(float* M, float* Mout, int M_ligne, int M_colonne, 
 /*
 *** Function Name : activation_tanh ***
 
-Sert à appliquer la fonction tanh à la matrice M sur le GPU. 
+Applies the hyperbolic tangent (tanh) activation function to each element of matrix M on the GPU.
 
-ATTENTION : Cette fonction est définie en __device__, elle doit donc être appelée du GPU par une fonction __global__.
-Elle est exécutée sur le GPU.
+Note: This is a __device__ function and must be called from a __global__ function on the GPU.
 
-Paramètres : 
-    M_ligne : nombre de lignes de la matrice M
-    M_colonne : nombre de colonnes de la matrice M
-    M_prof : profondeur de la matrice M
-    M : pointeur de la matrice
+Parameters:
+    M: Pointer to the matrix on which to apply the tanh function.
+    M_ligne: Number of rows in the matrix M.
+    M_colonne: Number of columns in the matrix M.
+    M_prof: Depth of the matrix M.
 */
+
 
 __device__ float* activation_tanh(float* M, int M_ligne, int M_colonne, int M_prof){
     
@@ -216,6 +221,15 @@ __device__ float* activation_tanh(float* M, int M_ligne, int M_colonne, int M_pr
     return M;
 }
 
+/*
+Kernel function to call the activation_tanh __device__ function.
+
+Parameters:
+    M: Pointer to the matrix on the GPU.
+    M_ligne: Number of rows in the matrix M.
+    M_colonne: Number of columns in the matrix M.
+    M_prof: Depth of the matrix M.
+*/
 
 
 __global__ void cudaTanh(float* M, int M_ligne, int M_colonne, int M_prof){
