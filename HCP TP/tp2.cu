@@ -239,13 +239,21 @@ __global__ void cudaTanh(float* M, int M_ligne, int M_colonne, int M_prof){
 /*
 *** Function Name : cudaTanh ***
 
-Sert simplement à appeler la fonction activation_tanh définie juste avant.
+/*
+The cudaTanh kernel launches the device-level function activation_tanh across GPU threads.
 
-Paramètres : 
-    M_ligne : nombre de lignes de la matrice M
-    M_colonne : nombre de colonnes de la matrice M
-    M_prof : profondeur de la matrice M
-    M : pointeur de la matrice
+This kernel function serves as a wrapper to invoke the activation_tanh function, which 
+applies the hyperbolic tangent (tanh) activation function to each element of the input matrix M.
+
+Parameters:
+   M: Pointer to the input matrix in device memory.
+   M_ligne: The number of rows in the input matrix.
+   M_colonne: The number of columns in the input matrix.
+   M_prof: The depth of the input matrix, indicating the number of matrices in the case of a 3D matrix.
+
+Note: 
+   This kernel should be configured with an appropriate number of blocks and threads to match the size of the input matrix.
+   It is assumed that the input matrix M is stored in a flat, row-major format.
 */
 
 
