@@ -240,17 +240,23 @@ __global__ void cudaTanh(float* M, int M_ligne, int M_colonne, int M_prof){
 /*
 *** Function Name : cudaMatrixMultGeneral ***
 
-Performs matrix multiplication (dot product) of a NxP matrix with a PxM matrix on the GPU.
+Performs matrix multiplication (dot product) between two matrices on the GPU.
+This device function multiplies a matrix M1 of size NxP with a matrix M2 of size PxM.
+
 Parameters:
-   n: Number of rows in matrix M1.
-   p: Number of columns in M1 and number of rows in M2.
+   M1: Pointer to the first matrix in device memory, size NxP.
+   M2: Pointer to the second matrix in device memory, size PxM.
+   Mout: Pointer to the output matrix in device memory, size NxM.
+   n: Number of rows in M1.
+   p: Number of columns in M1 (and rows in M2).
    m: Number of columns in M2.
-   M1: Pointer to the first matrix of size NxP.
-   M2: Pointer to the second matrix of size PxM.
-   Mout: Pointer to the output matrix of size NxM.
-Note:
-   Grid and block dimensions in the kernel launch should correspond to the dimensions of the output matrix.
+
+Functionality:
+   Each thread computes one element of the output matrix. The function assumes
+   that the grid and block dimensions in the kernel launch are set up to cover
+   the entire output matrix.
 */
+
 
 
 __device__ float* cudaMatrixMultGeneral(float *M1, float *M2, float *Mout, int n, int p, int m){
@@ -273,18 +279,18 @@ __device__ float* cudaMatrixMultGeneral(float *M1, float *M2, float *Mout, int n
 /*
 *** Function Name : cudaMatrixAdd ***
 
-Sert à additionner deux matrices de même taille NxP sur le GPU 
+Adds two matrices of the same size NxP element-wise on the GPU.
 
-Paramètres : 
-    n : nombre de lignes des matrice,
-    p : nombre de colonnes des matrices si n différent de p,
-    M1 : pointeur de la matrice 1 de taille NxP,
-    M2 : pointeur de la matrice 2 de taille NxP,
-    Mout : pointeur vers la matrice résultante de l'addition de taille NxP,
-    
-On peut considérer les dimensions des matrices comme les paramètres gridDim et blockDim pour l'appel de la fonction:
-    les lignes correspondent aux blocks,
-    les colonnes correspondent aux threads
+Parameters:
+   M1: Pointer to the first matrix in device memory, size NxP.
+   M2: Pointer to the second matrix in device memory, size NxP.
+   Mout: Pointer to the output matrix in device memory, where the result is stored, size NxP.
+   n: Number of rows in each matrix.
+   p: Number of columns in each matrix.
+
+Functionality:
+   Each thread adds one corresponding element from M1 and M2 and stores the result in Mout.
+   Assumes that the grid and block dimensions in the kernel launch cover the entire output matrix.
 */
 
 __device__ float* cudaMatrixAdd(float *M1, float *M2, float *Mout, int n, int p){
@@ -308,6 +314,26 @@ __global__ void cudaDense(float* d_M, float* d_Mout, float* d_W, float* d_b, int
 }
 
 
+/*
+
+*** Function:  cudaDense  ***
+Serves as a kernel to perform operations typical of a dense layer in neural networks on the GPU.
+It combines matrix multiplication followed by matrix addition, representing a linear transformation
+followed by a bias addition.
+
+Parameters:
+   d_M: Pointer to the input matrix in device memory.
+   d_Mout: Pointer to the output matrix in device memory.
+   d_W: Pointer to the weight matrix in device memory.
+   d_b: Pointer to the bias vector in device memory.
+   n: Number of rows in the input matrix d_M.
+   p: Number of columns in d_M and rows in d_W.
+   m: Number of columns in d_W and elements in d_b.
+
+Functionality:
+   Performs matrix multiplication between d_M and d_W and then adds d_b to the result.
+   The result is stored in d_Mout.
+*/
 
 
 
