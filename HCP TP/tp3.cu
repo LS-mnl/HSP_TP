@@ -6,23 +6,18 @@
 /*
 *** Function Name : MatrixInit ***
 
-Sert à initialiser n'importe quelle matrice de taille NxP selon diférentes possibilités:
-
-    * Si on veut initialiser qu'avec des 0  ==> type == 0 
-    
-                                    0 0 0
-    * Pour avoir un kernel comme :  0 1 0   ==> type == 1
-                                    0 0 0
-
-    * Pour avoir une initisalisation aléatoire entre 0 et 1: type == 2
-    
-Paramètres : 
-    n : nombre de lignes de la matrice,
-    p : nombre de colonnes de la matrice si n différent de p,
-    d : nombre de kernel de la matrice (profondeur)
-    M : pointeur de la matrice
-    type : permet de choisir l'initialisation souhaité
+Initializes a matrix of size NxPxD with various options:
+   type == 0: All elements set to 0.
+   type == 1: A central element set to 1, others set to 0 (assumes 3x3 matrix).
+   type == 2: Random initialization between 0 and 1 for each element.
+Parameters:
+   n: Number of rows in the matrix.
+   p: Number of columns in the matrix.
+   d: Depth of the matrix (used in 3D matrices).
+   M: Pointer to the matrix.
+   type: Type of initialization.
 */
+
 
 void MatrixInit(float *M, int n, int p, int d, int type){
     
@@ -51,15 +46,11 @@ void MatrixInit(float *M, int n, int p, int d, int type){
 /*
 *** Function Name : MatrixPrint ***
 
-Sert à afficher n'importe quelle matrice NxP dans une forme plus conventionnelle. 
-
-                                                              0 0 0
-ex : M = [0 0 0; 0 0 0; 0 0 0] sera affichée comme suit : M = 0 0 0   
-                                                              0 0 0 
-Paramètres : 
-    n : nombre de lignes de la matrice,
-    p : nombre de colonnes de la matrice si n différent de p,
-    M : pointeur de la matrice
+Prints a NxP matrix in a conventional format.
+Parameters:
+   n: Number of rows in the matrix.
+   p: Number of columns in the matrix.
+   M: Pointer to the matrix.
 */
 
 void MatrixPrint2D(float *M, int n, int p){
@@ -77,22 +68,23 @@ void MatrixPrint2D(float *M, int n, int p){
 /*
 *** Function Name : cudaConv2D ***
 
-Sert à effectuer la convolution de la matrice M avec 6 noyaux de convolution de taille 5x5.
+Performs convolution on matrix M using multiple 5x5 convolution kernels.
 
-Paramètres : 
-    M_ligne : nombre de lignes de la matrice M
-    M_colonne : nombre de colonnes de la matrice M
-    M : pointeur de la matrice
-    kernel_size : nombre de ligne et de colonne du kernel, noyau de convolution
-    nb_kernel : nombre de kernel, noyau de convolution 
-    kernel : pointeur de la matrice correspondant au kernel 
-    Mout_ligne : nombre de lignes de la matrice de sortie Mout
-    Mout_colonne : nombre de colonnes de la matrice de sortie Mout
-    Mout : pointeur de la matrice Mout
+Parameters:
+   M: Pointer to the input matrix.
+   kernel: Pointer to the convolution kernels.
+   Mout: Pointer to the output matrix.
+   M_ligne: Number of rows in M.
+   M_colonne: Number of columns in M.
+   kernel_size: Size of the convolution kernel.
+   nb_kernel: Number of convolution kernels.
+   Mout_ligne: Number of rows in the output matrix.
+   Mout_colonne: Number of columns in the output matrix.
 
-NB : La relation entre le nombre de lignes (respectivement de colonnes) de la matrice d'entrée et le nombre de lignes (respectivement de colonnes) de 
-la matrice de sortie est : Mout_ligne = (M_ligne - kernel_size) + 1 
+Note:
+   Output matrix dimensions are calculated as: Mout_ligne = (M_ligne - kernel_size) + 1, and similarly for columns.
 */
+
 
 __global__ void cudaConv2D(float* M, float* kernel, float* Mout, int M_ligne, int M_colonne, int kernel_size, int nb_kernel, int Mout_ligne, int Mout_colonne){
     
@@ -127,24 +119,26 @@ __global__ void cudaConv2D(float* M, float* kernel, float* Mout, int M_ligne, in
 /*
 *** Function Name : cudaMeanPool ***
 
-Sert à effectuer le MeanPool de la Matrice d'entrée M par un kernel 2x2. 
-
-ex : 1 2    ==>  2.5 = (1 + 2 + 3 + 4) / 4 = 2.5
+Performs mean pooling on the input matrix M using a 2x2 kernel.
+Example: 
+   Sub-matrix [1, 2; 3, 4] would be pooled to 2.5.
+     1 2    ==>  2.5 = (1 + 2 + 3 + 4) / 4 = 2.5
      3 4 
 
-Paramètres : 
-    M_ligne : nombre de lignes de la matrice M
-    M_colonne : nombre de colonnes de la matrice M
-    M_prof : profondeur de la matrice M
-    M : pointeur de la matrice
-    meanpool_size : nombre de ligne et de colonne du kernel, noyau de convolution
-    Mout_ligne : nombre de lignes de la matrice de sortie Mout
-    Mout_colonne : nombre de colonnes de la matrice de sortie Mout
-    Mout : pointeur de la matrice Mout
+Parameters:
+   M: Pointer to the input matrix.
+   Mout: Pointer to the output matrix.
+   M_ligne: Number of rows in M.
+   M_colonne: Number of columns in M.
+   M_prof: Depth of M.
+   meanpool_size: Size of the pooling kernel.
+   Mout_ligne: Number of rows in the output matrix.
+   Mout_colonne: Number of columns in the output matrix.
 
-NB : La relation entre le nombre de lignes (respectivement de colonnes) de la matrice d'entrée et le nombre de lignes (respectivement de colonnes) de 
-la matrice de sortie est : Mout_ligne = M_ligne / meanpool_size
+Note:
+   Output dimensions are calculated as: Mout_ligne = M_ligne / meanpool_size, and similarly for columns.
 */
+
 
 __global__ void cudaMeanPool(float* M, float* Mout, int M_ligne, int M_colonne, int M_prof, int meanpool_size, int Mout_ligne, int Mout_colonne){
     
@@ -184,17 +178,16 @@ __global__ void cudaMeanPool(float* M, float* Mout, int M_ligne, int M_colonne, 
 /*
 *** Function Name : activation_tanh ***
 
-Sert à appliquer la fonction tanh à la matrice M sur le GPU. 
-
-ATTENTION : Cette fonction est définie en __device__, elle doit donc être appelée du GPU par une fonction __global__.
-Elle est exécutée sur le GPU.
-
-Paramètres : 
-    M_ligne : nombre de lignes de la matrice M
-    M_colonne : nombre de colonnes de la matrice M
-    M_prof : profondeur de la matrice M
-    M : pointeur de la matrice
+Applies the tanh activation function to the matrix M on the GPU.
+Note: This is a __device__ function and should be called from a __global__ function.
+Parameters:
+   M: Pointer to the matrix.
+   M_ligne: Number of rows in M.
+   M_colonne: Number of columns in M.
+   M_prof: Depth of M.
 */
+
+
 __device__ float* activation_tanh(float* M, int M_ligne, int M_colonne, int M_prof){
     
     int lig = blockIdx.y * blockDim.y + threadIdx.y;
