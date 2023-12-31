@@ -2,6 +2,8 @@
 
   #### Implémentation d'un CNN - LeNet-5 sur GPU
 
+<strong style="color: red;">Compilation et Exécution depuis la console</strong>
+
 Réalisé par : **Manel KEBIR  & Rayane KHERZI**
 
 <img src="https://img.shields.io/badge/0-Getting Started-red" alt="Getting Started" style="height: 40px;"/>
