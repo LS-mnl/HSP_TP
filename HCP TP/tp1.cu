@@ -157,22 +157,28 @@ __global__ void cudaMatrixMult(float *M1, float *M2, float *Mout, int n) {
     }
 }
 /*
-*** Function Name : cudaMatrixMultGeneral ***
+*** Function Name: cudaMatrixMultGeneral ***
 
-Sert à effectuer la multiplication matricielle (dot) d'une matrice NxP avec une matrice PxM sur le GPU
+Performs matrix multiplication (dot product) of a NxP matrix with a PxM matrix on the GPU,
+resulting in an NxM matrix.
 
-Paramètres : 
-    n : nombre de lignes de la matrice M1
-    p : nombre de colonnes de M1, de lignes de M2
-    m : nombre de colonnes de M2
-    M1 : pointeur de la matrice 1 de taille NxP,
-    M2 : pointeur de la matrice 2 de taille PxM,
-    Mout : pointeur vers la matrice résultante de la multiplication de taille NxM
+Parameters:
+    M1: Pointer to the first matrix of size NxP in GPU memory.
+    M2: Pointer to the second matrix of size PxM in GPU memory.
+    Mout: Pointer to the resulting matrix of size NxM in GPU memory.
+    n: Number of rows in the first matrix (and the resulting matrix).
+    p: Number of columns in the first matrix and number of rows in the second matrix.
+    m: Number of columns in the second matrix (and the resulting matrix).
 
-On peut considérer les dimensions de la matrice de sortie comme les paramètres gridDim et blockDim pour l'appel de la fonction:
-    les lignes correspondent aux blocks : n
-    les colonnes correspondent aux threads : m
+Notes:
+    Each thread computes one element of the resulting matrix. The thread grid should be 
+    configured such that the x-dimension of the grid (blockIdx.x * blockDim.x) is at least 
+    'm' and the y-dimension of the grid (blockIdx.y * blockDim.y) is at least 'n'. The dimensions 
+    of the resulting matrix do not directly correspond to gridDim and blockDim dimensions, 
+    but rather to the product of these dimensions with the number of threads per block to 
+    fully cover the output matrix.
 */
+
 
 __global__ void cudaMatrixMultGeneral(float *M1, float *M2, float *Mout, int n, int p, int m) {
     int lig = blockIdx.y * blockDim.y + threadIdx.y;
