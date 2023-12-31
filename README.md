@@ -4,7 +4,7 @@
 
 Réalisé par : **Manel KEBIR  & Rayane KHERZI**
 
-<img src="https://img.shields.io/badge/0-Getting Started-green" alt="Getting Started" style="height: 40px;"/>
+<img src="https://img.shields.io/badge/0-Getting Started-orange" alt="Getting Started" style="height: 40px;"/>
 
 
 - Le langage utilisé pour ce TP est du Cuda, il vous faudra donc une carte graphique Nvidia. Sinon,ce n'est pas possible d'utiliser les fonctions qui utilisent le GPU. 
