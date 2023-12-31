@@ -4,13 +4,15 @@
 /*
 *** Function Name : MatrixInit ***
 
-Sert à initialiser n'importe quelle matrice de taille NxP avec des valeurs entre -1 et 1 
 
-Paramètres : 
-    n : nombre de lignes de la matrice,
-    p : nombre de colonnes de la matrice si n différent de p,
-    M : pointeur de la matrice
+ Initializes a matrix of size NxP with random values between -1 and 1.
+
+ * Parameters:
+ *    M: Pointer to the matrix (stored in row-major order)
+ *    n: Number of rows in the matrix
+ *    p: Number of columns in the matrix
 */
+
 
 void MatrixInit(float *M, int n, int p) {
     for (int i = 0; i < n * p; i++) {
