@@ -4,25 +4,19 @@
 /*
 *** Function Name : MatrixInit ***
 
-Sert à initialiser n'importe quelle matrice de taille NxP selon diférentes possibilités:
-
-    * Si on veut initialiser qu'avec des 0  ==> type == 0 
-    
-    * Si on veut initialiser qu'avec des 1  ==> type == 1 
-    
-                                    0 0 0
-    * Pour avoir un kernel comme :  0 2 0   ==> type == 2
-                                    0 0 0
-
-    * Pour avoir une initisalisation aléatoire entre 0 et 1: type == 3
-    
-Paramètres : 
-    n : nombre de lignes de la matrice,
-    p : nombre de colonnes de la matrice si n différent de p,
-    d : nombre de kernel de la matrice (profondeur)
-    M : pointeur de la matrice
-    type : permet de choisir l'initialisation souhaité
+Initializes a matrix of size NxPxD with specified values based on the 'type':
+   type == 0: Fills the matrix with zeros.
+   type == 1: Fills the matrix with ones.
+   type == 2: Creates a kernel matrix with a central value of 2, others being zero (assumes a 3D matrix).
+   type == 3: Fills the matrix with random values between 0 and 1.
+Parameters:
+   M: Pointer to the matrix (in row-major order).
+   n: Number of rows.
+   p: Number of columns.
+   d: Depth (third dimension).
+   type: Initialization mode (0, 1, 2, or 3).
 */
+
 
 void MatrixInit(float *M, int n, int p, int d, int type){
     
@@ -57,18 +51,12 @@ void MatrixInit(float *M, int n, int p, int d, int type){
 
 /*
 *** Function Name : MatrixPrint2D ***
-
-Sert à afficher n'importe quelle matrice NxP dans une forme plus conventionnelle. 
-
-                                                              0 0 0
-ex : M = [0 0 0; 0 0 0; 0 0 0] sera affichée comme suit : M = 0 0 0   
-                                                              0 0 0 
-Paramètres : 
-    n : nombre de lignes de la matrice,
-    p : nombre de colonnes de la matrice si n différent de p,
-    M : pointeur de la matrice
+Prints a 2D matrix in conventional format.
+Parameters:
+   M: Pointer to the matrix (in row-major order).
+   n: Number of rows.
+   p: Number of columns.
 */
-
 
 void MatrixPrint2D(float *M, int n, int p){
     
@@ -87,22 +75,25 @@ void MatrixPrint2D(float *M, int n, int p){
 /*
 *** Function Name : cudaConv2D ***
 
-Sert à effectuer la convolution de la matrice M avec 6 noyaux de convolution de taille 5x5.
+Performs 2D convolution on a matrix M using a specified number of 5x5 kernels.
 
-Paramètres : 
-    M_ligne : nombre de lignes de la matrice M
-    M_colonne : nombre de colonnes de la matrice M
-    M : pointeur de la matrice
-    kernel_size : nombre de ligne et de colonne du kernel, noyau de convolution
-    nb_kernel : nombre de kernel, noyau de convolution 
-    kernel : pointeur de la matrice correspondant au kernel 
-    Mout_ligne : nombre de lignes de la matrice de sortie Mout
-    Mout_colonne : nombre de colonnes de la matrice de sortie Mout
-    Mout : pointeur de la matrice Mout
+Parameters:
+   M: Input matrix in device memory.
+   kernel: Convolution kernels in device memory.
+   Mout: Output matrix in device memory to store the result.
+   M_ligne: Number of rows in the input matrix.
+   M_colonne: Number of columns in the input matrix.
+   kernel_size: Size of one side of the square convolution kernel.
+   nb_kernel: Number of convolution kernels.
+   Mout_ligne: Number of rows in the output matrix.
+   Mout_colonne: Number of columns in the output matrix.
 
-NB : La relation entre le nombre de lignes (respectivement de colonnes) de la matrice d'entrée et le nombre de lignes (respectivement de colonnes) de 
-la matrice de sortie est : Mout_ligne = (M_ligne - kernel_size) + 1 
+Note:
+   The dimensions of the output matrix Mout are computed as:
+   Mout_ligne = (M_ligne - kernel_size) + 1
+   Mout_colonne = (M_colonne - kernel_size) + 1
 */
+
 
 __global__ void cudaConv2D(float* M, float* kernel, float* Mout, int M_ligne, int M_colonne, int kernel_size, int nb_kernel, int Mout_ligne, int Mout_colonne){
     
@@ -133,6 +124,7 @@ __global__ void cudaConv2D(float* M, float* kernel, float* Mout, int M_ligne, in
 }
 
 // Layer 3 - Sous-échantillonnage 
+
 
 /*
 *** Function Name : cudaMeanPool ***
@@ -241,6 +233,8 @@ Paramètres :
     M_prof : profondeur de la matrice M
     M : pointeur de la matrice
 */
+
+
 
 int main(){
     
