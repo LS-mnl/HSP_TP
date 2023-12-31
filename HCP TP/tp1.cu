@@ -89,15 +89,20 @@ __global__ void cudaMatrixAdd(float *M1, float *M2, float *Mout, int n, int p) {
     }
 }
 
-/*
-  Performs matrix multiplication (dot product) of two square matrices NxN on the CPU.
-  
-  Parameters:
-     M1:   Pointer to the first matrix (stored in row-major order)
-     M2:   Pointer to the second matrix (stored in row-major order)
-     Mout: Pointer to the output matrix where the result is stored (stored in row-major order)
-     n:    The dimension of the matrices (both the number of rows and columns)
- */
+
+
+void MatrixMult(float *M1, float *M2, float *Mout, int n) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            float s = 0.0f;
+            for (int k = 0; k < n; k++) {
+                s += M1[i * n + k] * M2[k * n + j];
+            }
+            Mout[i * n + j] = s;
+        }
+    }
+}
+
 
 /*
 *** Function Name : MatrixMult ***
@@ -114,15 +119,18 @@ __global__ void cudaMatrixAdd(float *M1, float *M2, float *Mout, int n, int p) {
  */
 
 
-void MatrixMult(float *M1, float *M2, float *Mout, int n) {
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            float s = 0.0f;
-            for (int k = 0; k < n; k++) {
-                s += M1[i * n + k] * M2[k * n + j];
-            }
-            Mout[i * n + j] = s;
+
+
+__global__ void cudaMatrixMult(float *M1, float *M2, float *Mout, int n) {
+    int row = blockIdx.y * blockDim.y + threadIdx.y;
+    int col = blockIdx.x * blockDim.x + threadIdx.x;
+
+    if (row < n && col < n) {
+        float val = 0;
+        for (int k = 0; k < n; ++k) {
+            val += M1[row * n + k] * M2[k * n + col];
         }
+        Mout[row * n + col] = val;
     }
 }
 
@@ -144,18 +152,23 @@ void MatrixMult(float *M1, float *M2, float *Mout, int n) {
  */
 
 
-__global__ void cudaMatrixMult(float *M1, float *M2, float *Mout, int n) {
-    int row = blockIdx.y * blockDim.y + threadIdx.y;
+
+
+__global__ void cudaMatrixMultGeneral(float *M1, float *M2, float *Mout, int n, int p, int m) {
+    int lig = blockIdx.y * blockDim.y + threadIdx.y;
     int col = blockIdx.x * blockDim.x + threadIdx.x;
 
-    if (row < n && col < n) {
-        float val = 0;
-        for (int k = 0; k < n; ++k) {
-            val += M1[row * n + k] * M2[k * n + col];
+    float s = 0.0f;
+
+    if (lig < n && col < m) {
+        for (int i = 0; i < p; i++) {
+            s += M1[lig * p + i] * M2[i * m + col];
         }
-        Mout[row * n + col] = val;
+        Mout[lig * m + col] = s;
     }
 }
+
+
 /*
 *** Function Name: cudaMatrixMultGeneral ***
 
@@ -178,24 +191,6 @@ Notes:
     but rather to the product of these dimensions with the number of threads per block to 
     fully cover the output matrix.
 */
-
-
-__global__ void cudaMatrixMultGeneral(float *M1, float *M2, float *Mout, int n, int p, int m) {
-    int lig = blockIdx.y * blockDim.y + threadIdx.y;
-    int col = blockIdx.x * blockDim.x + threadIdx.x;
-
-    float s = 0.0f;
-
-    if (lig < n && col < m) {
-        for (int i = 0; i < p; i++) {
-            s += M1[lig * p + i] * M2[i * m + col];
-        }
-        Mout[lig * m + col] = s;
-    }
-}
-
-
-
 
 
 
