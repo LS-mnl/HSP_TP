@@ -1,4 +1,4 @@
-<img src="https://img.shields.io/badge/Hardware for Signal Processing-orange" alt="Hardware for Signal Processing" style="height: 60px;"/>
+<img src="https://img.shields.io/badge/Hardware for Signal Processing-green" alt="Hardware for Signal Processing" style="height: 60px;"/>
 
   #### Implémentation d'un CNN - LeNet-5 sur GPU
 
