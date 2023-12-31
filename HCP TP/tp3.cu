@@ -217,15 +217,19 @@ Parameters:
 
 /*
 *** Function Name : cudaTanh ***
+This function serves as a CUDA kernel to apply the tanh activation function to each element of a given matrix on the GPU. It is a wrapper that calls the device function `activation_tanh`.
 
-Sert simplement à appeler la fonction activation_tanh définie juste avant.
+Parameters:
+   M: Pointer to the matrix in GPU memory upon which the tanh activation function is to be applied.
+   M_ligne: Number of rows in the matrix M.
+   M_colonne: Number of columns in the matrix M.
+   M_prof: Depth of the matrix M, applicable in case of a 3D matrix.
 
-Paramètres : 
-    M_ligne : nombre de lignes de la matrice M
-    M_colonne : nombre de colonnes de la matrice M
-    M_prof : profondeur de la matrice M
-    M : pointeur de la matrice
+Usage:
+   This function should be called with appropriate CUDA kernel configuration (grid and block sizes).
+   It is intended to work with matrices stored in GPU memory and applies the tanh function in parallel to each element.
 */
+
 
 __global__ void cudaTanh(float* M, int M_ligne, int M_colonne, int M_prof){
     activation_tanh(M, M_ligne, M_colonne, M_prof);
@@ -303,7 +307,10 @@ __global__ void cudaDense(float* d_M, float* d_Mout, float* d_W, float* d_b, int
     
 }
 
-// Fonction main
+
+
+
+
 int main(){
     
 // CPU \\ 
